@@ -1,5 +1,3 @@
-//Programa de ejemplo para calcular la inversa de una matriz
-
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
