@@ -1,3 +1,5 @@
+package Fhulano;
+
 public class Operaciones {
     public static double[][] sumarAB(double[][] a, double[][] b) {
         double c[][] = new double[a.length][a.length];
@@ -94,7 +96,7 @@ public class Operaciones {
         return null;
     }
 
-    public static double[][] transpuesta(double[][] d) {
+    public static double[][] transpuestaMxM(double[][] d) {
         double[][] aux = new double[d.length][d.length];
         for (int i = 0; i < d.length; ++i) {
             for (int j = 0; j < d.length; ++j) {
@@ -104,8 +106,28 @@ public class Operaciones {
         return aux;
     }
 
-    // DecimalFormat df = new DecimalFormat("#.00");
-    // aux[i][j] = Double.parseDouble(df.format((d[i][j])));
+    // public static double[][] transpuesta(double[][] d, int m, int n) {
+    // double[][] aux = new double[m][n];
+    // for (int i = 0; i < m; ++i) {
+    // for (int j = 0; j < n; ++j) {
+    // aux[i][j] = d[j][i];
+    // }
+    // }
+    // return aux;
+    // }
+
+    public static double[][] transpuesta(double[][] m) {
+        double[][] matrix = new double[m[0].length][m.length];
+        for (int j = 0; j < m[0].length; j++) {
+            for (int i = 0; i < m.length; i++) {
+                matrix[j][i] = m[i][j];
+            }
+        }
+
+        return matrix;
+
+    }
+
     public static double[][] invert(double a[][]) {
         int n = a.length;
         double x[][] = new double[n][n];
@@ -182,5 +204,8 @@ public class Operaciones {
             }
         }
     }
+
+    // DecimalFormat df = new DecimalFormat("#.00");
+    // aux[i][j] = Double.parseDouble(df.format((d[i][j])));
 
 }
