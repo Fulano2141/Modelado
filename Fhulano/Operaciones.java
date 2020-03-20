@@ -12,9 +12,9 @@ public class Operaciones {
     }
 
     public static double[][] restarA_B(double[][] a, double[][] b) {
-        double c[][] = new double[a.length][a.length];
+        double c[][] = new double[a.length][a[0].length];
         for (int i = 0; i < c.length; ++i) {
-            for (int j = 0; j < c.length; ++j) {
+            for (int j = 0; j < c[0].length; ++j) {
                 c[i][j] = a[i][j] - b[i][j];
             }
         }

@@ -61,5 +61,4 @@ public class Inverse {
         return aux;
     }
 
-  
 }
