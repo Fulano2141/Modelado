@@ -1,6 +1,7 @@
 package Fhulano;
 
 import java.text.DecimalFormat;
+import Fhulano.Operaciones;
 
 public class testing {
     public static void main(String args[]) {
