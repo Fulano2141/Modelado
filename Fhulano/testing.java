@@ -5,6 +5,10 @@ import Fhulano.Operaciones;
 
 public class testing {
     public static void main(String args[]) {
+        double SRC = 0.0;
+        double varianza;
+        double[][] matC;
+
         // double[][] x = new double[3][3];
         double[][] x = { { 1.0, 10.0, 3.0, 1.0 }, { 1.0, 5.0, 1.5, 1.0 }, { 1.0, 10.0, 1.0, 1.0 },
                 { 1.0, 20.0, 2.0, 1.0 }, { 1.0, 15.0, 4.0, 1.0 }, { 1.0, 10.0, 2.0, 1.0 }, { 1.0, 6.0, 0.0, 0.0 },
@@ -35,6 +39,8 @@ public class testing {
         // for (int i = 0; i < betas.length; i++) {
         // System.out.println("B" + i + ": " + betas[i]);
         // }
+
+        // Y aproximadas
         double[][] ya = new double[y.length][1];
         for (int i = 0; i < ya.length; i++) {
             ya[i][0] = betas[0] + (x[i][1] * betas[1]) + (x[i][2] * betas[2]) + (x[i][3] * betas[3]);
@@ -48,46 +54,77 @@ public class testing {
         // System.out.println();
         // }
 
+        /// Y menos Y aproximadas al cuadrado _ SRC
         d = Operaciones.restarA_B(y, ya);
         for (int i = 0; i < d.length; i++) {
             for (int j = 0; j < d[0].length; j++) {
                 d[i][j] = d[i][j] * d[i][j];
             }
         }
-        double SRC = 0;
+
         for (int i = 0; i < d.length; i++) {
             for (int j = 0; j < d[0].length; j++) {
                 SRC += d[i][j];
             }
         }
-        SRC = SRC / (y.length - 3);
-        /// SRC/(n-k)
-        System.out.println("Varianza: \t" + SRC);
-        d = Operaciones.multiplicacionNxM(Operaciones.transpuesta(x), x);
-        d = Operaciones.invert(d);
-        for (int i = 0; i < d.length; i++) {
-            for (int j = 0; j < d[0].length; j++) {
-                d[i][j] *= SRC;
-            }
-        }
+        varianza = SRC / (y.length - 3);
+        // System.out.println("Varianza: \t" + varianza);
+
         // MATRIZ DE VARIANZAS
-        // d = redondear(d);
-        // for (int i = 0; i < d.length; i++) {
-        // for (int j = 0; j < d[0].length; j++) {
-        // System.out.print(d[i][j] + "\t");
-        // }
-        // System.out.println();
-        // }
-        double[] varBeta = new double[d.length];
-        for (int i = 0; i < d.length; i++) {
-            varBeta[i] = d[i][i] * SRC;
+        // C inversa de la multiplicacion de X transpuesta con X
+        matC = Operaciones.multiplicacionNxM(Operaciones.transpuesta(x), x);
+        matC = Operaciones.invert(matC);
+        // matC = redondearMat(matC);
+        for (int i = 0; i < matC.length; i++) {
+            for (int j = 0; j < matC[0].length; j++) {
+                matC[i][j] *= varianza;
+                // System.out.print(redondearNum(matC[i][j]) + "\t");
+            }
+            // System.out.println();
         }
-        for (int i = 0; i < d.length; i++) {
-            System.out.println(varBeta[i]);
+        // Vector de VARIANZAS Bi
+        double[] varBeta = new double[matC.length];
+        for (int i = 0; i < matC.length; i++) {
+            varBeta[i] = varianza * matC[i][i];
+            // System.out.print(redondearNum(varBeta[i]) + "\t");
+        }
+        double[][] limites = new double[varBeta.length][2];
+
+        // t de tablas con 95% de confianza con 16 GL
+        double ttablas = 2.1199;
+
+        for (int i = 0; i < limites.length; i++) {
+            for (int j = 0; j < limites[0].length; j++) {
+                if (j % 2 == 0) {
+                    limites[i][j] = varBeta[i] - ttablas * 1 * Math.sqrt(matC[i][i]);
+                } else {
+                    limites[i][j] = varBeta[i] + ttablas * 1 * Math.sqrt(matC[i][i]);
+                }
+                // System.out.print(limites[i][j]+ "\t");
+            }
+            // System.out.println();
+        }
+
+        // Prueba de significacia individual
+        double[] t = new double[varBeta.length];
+        for (int i = 0; i < t.length; i++) {
+            t[i] = varBeta[i] / (1 * Math.sqrt(matC[i][i]));
+            // System.out.println(redondearNum(t[i]) + "\t");
+        }
+
+        // H0: Baproxi = Bi0
+        // H1: Baproxi != Bi0
+        String[] pruebas = new String[varBeta.length];
+        for (int i = 0; i < pruebas.length; i++) {
+            if (t[i] > ttablas)
+                pruebas[i] = "Se rechaza H0";
+            else
+                pruebas[i] = "Se rechaza H1";
+            System.out.println(pruebas[i] + "\t");
         }
     }
 
-    private static double[][] redondear(double[][] d) {
+    private static double[][] redondearMat(double[][] d) {
         DecimalFormat df = new DecimalFormat("#.0000");
         double aux[][] = d;
         for (int i = 0; i < d.length; ++i) {
@@ -95,6 +132,13 @@ public class testing {
                 aux[i][j] = Double.parseDouble(df.format((d[i][j])));
             }
         }
+        return aux;
+    }
+
+    private static double redondearNum(double d) {
+        double aux;
+        DecimalFormat df = new DecimalFormat("#.0000");
+        aux = Double.parseDouble(df.format((d)));
         return aux;
     }
 
