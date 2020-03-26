@@ -96,9 +96,9 @@ public class testing {
         for (int i = 0; i < limites.length; i++) {
             for (int j = 0; j < limites[0].length; j++) {
                 if (j % 2 == 0) {
-                    limites[i][j] = varBeta[i] - ttablas * 1 * Math.sqrt(matC[i][i]);
+                    limites[i][j] = varBeta[i] - ttablas * Math.sqrt(varianza) * Math.sqrt(matC[i][i]);
                 } else {
-                    limites[i][j] = varBeta[i] + ttablas * 1 * Math.sqrt(matC[i][i]);
+                    limites[i][j] = varBeta[i] + ttablas * Math.sqrt(varianza) * Math.sqrt(matC[i][i]);
                 }
                 // System.out.print(limites[i][j]+ "\t");
             }
@@ -108,8 +108,8 @@ public class testing {
         // Prueba de significacia individual
         double[] t = new double[varBeta.length];
         for (int i = 0; i < t.length; i++) {
-            t[i] = varBeta[i] / (1 * Math.sqrt(matC[i][i]));
-            // System.out.println(redondearNum(t[i]) + "\t");
+            t[i] = varBeta[i] / (Math.sqrt(varianza) * Math.sqrt(matC[i][i]));
+            System.out.println(redondearNum(t[i]) + "\t");
         }
 
         // H0: Baproxi = Bi0
@@ -120,7 +120,7 @@ public class testing {
                 pruebas[i] = "Se rechaza H0";
             else
                 pruebas[i] = "Se rechaza H1";
-            System.out.println(pruebas[i] + "\t");
+            System.out.println(pruebas[i] + ":\t"+"t aprox "+ redondearNum(t[i]) + " t tabla "+ ttablas);
         }
     }
 
