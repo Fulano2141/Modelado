@@ -10,15 +10,24 @@ public class testing {
         double[][] matC;
 
         // double[][] x = new double[3][3];
-        double[][] x = { { 1.0, 10.0, 3.0, 1.0 }, { 1.0, 5.0, 1.5, 1.0 }, { 1.0, 10.0, 1.0, 1.0 },
-                { 1.0, 20.0, 2.0, 1.0 }, { 1.0, 15.0, 4.0, 1.0 }, { 1.0, 10.0, 2.0, 1.0 }, { 1.0, 6.0, 0.0, 0.0 },
-                { 1.0, 25.0, 1.0, 1.0 }, { 1.0, 30.0, 2.0, 1.0 }, { 1.0, 10.0, 1.0, 1.0 }, { 1.0, 10.0, 1.0, 1.0 },
-                { 1.0, 20.0, 1.0, 1.0 }, { 1.0, 20.0, 0.5, 1.0 }, { 1.0, 20.0, 2.0, 1.0 }, { 1.0, 30.0, 0.5, 1.0 },
-                { 1.0, 20.0, 1.0, 0.0 }, { 1.0, 10.0, 1.0, 1.0 }, };
-
+        // double[][] x = { { 1.0, 10.0, 3.0, 1.0 }, { 1.0, 5.0, 1.5, 1.0 }, { 1.0,
+        // 10.0, 1.0, 1.0 },
+        // { 1.0, 20.0, 2.0, 1.0 }, { 1.0, 15.0, 4.0, 1.0 }, { 1.0, 10.0, 2.0, 1.0 }, {
+        // 1.0, 6.0, 0.0, 0.0 },
+        // { 1.0, 25.0, 1.0, 1.0 }, { 1.0, 30.0, 2.0, 1.0 }, { 1.0, 10.0, 1.0, 1.0 }, {
+        // 1.0, 10.0, 1.0, 1.0 },
+        // { 1.0, 20.0, 1.0, 1.0 }, { 1.0, 20.0, 0.5, 1.0 }, { 1.0, 20.0, 2.0, 1.0 }, {
+        // 1.0, 30.0, 0.5, 1.0 },
+        // { 1.0, 20.0, 1.0, 0.0 }, { 1.0, 10.0, 1.0, 1.0 }, };
+        double[][] x = { { 7.0 }, { -5.0 }, { 2.0 }, { 4.0 }, { 5.0 }, { 7.0 }, { 2.0 }, { 6.0 }, { 4.0 }, { -2.0 },
+                { -3.0 }, { 11.0 }, { 9.0 }, { 10.0 }, { -4.0 }, { -1.0 }, { 8.0 }, { 3.0 }, { -3.0 }, };
         // double[][] y = new double[3][3];
-        double[][] y = { { 72.0 }, { 63.0 }, { 65.0 }, { 68.0 }, { 78.0 }, { 64.0 }, { 56.0 }, { 59.0 }, { 60.0 },
-                { 85.0 }, { 67.0 }, { 61.0 }, { 65.0 }, { 79.0 }, { 61.0 }, { 52.0 }, { 65.0 } };
+        // double[][] y = { { 72.0 }, { 63.0 }, { 65.0 }, { 68.0 }, { 78.0 }, { 64.0 },
+        // { 56.0 }, { 59.0 }, { 60.0 },
+        // { 85.0 }, { 67.0 }, { 61.0 }, { 65.0 }, { 79.0 }, { 61.0 }, { 52.0 }, { 65.0
+        // } };
+        double[][] y = { { 2.0 }, { 3.0 }, { 4.0 }, { 5.0 }, { 6.0 }, { 7.0 }, { 8.0 }, { 9.0 }, { 10.0 }, { 11.0 },
+                { 12.0 }, { 13.0 }, { 14.0 }, { 15.0 }, { 16.0 }, { 17.0 }, { 18.0 }, { 19.0 }, { 20.0 }, };
 
         // double[][] d = x;
         double[][] d = Operaciones.multiplicacionNxM(Operaciones.transpuesta(x), x);
@@ -30,20 +39,22 @@ public class testing {
         for (int i = 0; i < d.length; i++) {
             for (int j = 0; j < d[0].length; j++) {
                 betas[i] = d[i][j];
-                // System.out.print(d[i][j] + "\t");
+                System.out.println(d[i][j] + "\t");
             }
-            // System.out.println();
+            System.out.println();
         }
 
         // System.out.println(Arrays.deepToString(betas));
-        // for (int i = 0; i < betas.length; i++) {
-        // System.out.println("B" + i + ": " + betas[i]);
-        // }
+        for (int i = 0; i < betas.length; i++) {
+            System.out.println("B" + i + ": " + betas[i]);
+        }
 
         // Y aproximadas
         double[][] ya = new double[y.length][1];
         for (int i = 0; i < ya.length; i++) {
-            ya[i][0] = betas[0] + (x[i][1] * betas[1]) + (x[i][2] * betas[2]) + (x[i][3] * betas[3]);
+            // ya[i][0] = betas[0] + (x[i][1] * betas[1]) + (x[i][2] * betas[2]) + (x[i][3]
+            // * betas[3]);
+            ya[i][0] = betas[0] * x[i][0];
         }
 
         // for (int i = 0; i < ya.length; i++) {
@@ -120,7 +131,7 @@ public class testing {
                 pruebas[i] = "Se rechaza H0";
             else
                 pruebas[i] = "Se rechaza H1";
-            System.out.println(pruebas[i] + ":\t"+"t aprox "+ redondearNum(t[i]) + " t tabla "+ ttablas);
+            System.out.println(pruebas[i] + ":\t" + "t aprox " + redondearNum(t[i]) + " ttabla " + ttablas);
         }
     }
 
