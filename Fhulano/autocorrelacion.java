@@ -65,6 +65,7 @@ public class autocorrelacion {
         yuleWalker aWalker = new yuleWalker(a1p, a2p, a3p);
         System.out.println(aWalker.toString());
 
+        
         double[][] gamas = aWalker.gAmas(false);
         for (int i = 0; i < gamas.length; i++) {
             for (int j = 0; j < gamas[0].length; j++) {
