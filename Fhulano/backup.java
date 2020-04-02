@@ -58,10 +58,12 @@ public class backup {
 
         double[] varBeta = varianzaDeBetas(matVar, varianza);
 
-        double[][] limites = Definirlimites(varBeta, ttablas, varianza, matC, imprimir);
+        // double[][] limites =
+        Definirlimites(varBeta, ttablas, varianza, matC, imprimir);
 
         // Prueba de significancia individual
-        double[] t = significanciaIndividual(varBeta, varianza, matC, ttablas, imprimir);
+        // double[] t =
+        significanciaIndividual(varBeta, varianza, matC, ttablas, imprimir);
 
         double CuadradosMedios1 = SEC / (k - 1);
         double CuadradosMedios2 = SRC / (n - k);
@@ -124,9 +126,11 @@ public class backup {
         double[][] aux = new double[varBeta.length][2];
         if (imprimir) {
             System.out.println("----------------------------------");
-            System.out.println("Limites\nInferior\tSuperior");
+            System.out.println("Limites\t\tInferior\tSuperior");
         }
         for (int i = 0; i < aux.length; i++) {
+            if (imprimir)
+                System.out.print("t[" + i + "]" + "\t\t");
             for (int j = 0; j < aux[0].length; j++) {
                 if (j % 2 == 0) {
                     aux[i][j] = varBeta[i] - ttablas * Math.sqrt(varianza) * Math.sqrt(matC[i][i]);

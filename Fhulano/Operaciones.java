@@ -1,6 +1,16 @@
 package Fhulano;
 
+import java.text.DecimalFormat;
+
 public class Operaciones {
+
+    public static double redondearNum(double d) {
+        double aux;
+        DecimalFormat df = new DecimalFormat("#.0000");
+        aux = Double.parseDouble(df.format((d)));
+        return aux;
+    }
+
     public static double[][] sumarAB(double[][] a, double[][] b) {
         double c[][] = new double[a.length][a.length];
         for (int i = 0; i < c.length; ++i) {
@@ -154,6 +164,13 @@ public class Operaciones {
                 x[j][i] /= a[index[j]][j];
             }
         }
+        for (int i = 0; i < x.length; i++) {
+            for (int j = 0; j < x[0].length; j++) {
+                if (x[i][j] == -0.0)
+                    x[i][j] = 0.0;
+            }
+        }
+
         return x;
     }
 
@@ -205,6 +222,16 @@ public class Operaciones {
         }
     }
 
+    public static double[][] redondearMat(double[][] d) {
+        DecimalFormat df = new DecimalFormat("#.0000");
+        double aux[][] = d;
+        for (int i = 0; i < d.length; ++i) {
+            for (int j = 0; j < d[0].length; ++j) {
+                aux[i][j] = Double.parseDouble(df.format((d[i][j])));
+            }
+        }
+        return aux;
+    }
     // DecimalFormat df = new DecimalFormat("#.00");
     // aux[i][j] = Double.parseDouble(df.format((d[i][j])));
 
