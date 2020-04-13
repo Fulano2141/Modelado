@@ -85,7 +85,7 @@ public class autocorrelacion {
         // System.out.println("G[" + i + "]: " + Operaciones.redondearNum(gamas[i][j]));
         // }
         // }
-        double[][] ypro = new double[30][1];
+        double[][] ypro = new double[50][1];
         n = y.length;
         ypro[0][0] = gamass[0][0] * y[n - 1][0] + gamass[1][0] * y[n - 2][0] + gamass[2][0] * y[n - 3][0];
         ypro[1][0] = gamass[0][0] * ypro[0][0] + gamass[1][0] * y[n - 1][0] + gamass[2][0] * y[n - 2][0];
@@ -105,7 +105,7 @@ public class autocorrelacion {
         // ypro[0][0] = y[y.length-1][0] +y[];
         for (int i = 0; i < ypro.length; i++) {
             // try {
-            y1.add(ypro[i][0] + y1.get(y1.size() - i - 1));
+            y1.add(ypro[i][0] + y1.get(y1.size() - 1));
             // System.out.println(y1.get(i));
 
             // System.out.println(ypro[i][0]);
@@ -116,9 +116,16 @@ public class autocorrelacion {
         File file = new File("archivo.xls");
         FileWriter salida = new FileWriter(file);
         for (int i = 0; i < y1.size(); i++) {
-            System.out.println(y1.get(i));
-            salida.write("\t"); // pasamos a la siguiente columna
-            salida.write(y1.get(i).toString());
+            // System.out.println(y1.get(i));
+            salida.write((i + 1) + "");
+            salida.write("\t");
+            salida.write(Operaciones.redondearNum(y1.get(i)) + "");
+            try {
+                salida.write("\t");
+                salida.write(Operaciones.redondearNum(ypro[i][0]) + "");
+            } catch (Exception e) {
+
+            }
             salida.write("\n");
         }
 
