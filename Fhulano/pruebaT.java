@@ -76,7 +76,7 @@ public class pruebaT {
         double[][] aux = Operaciones.restarA_B(y2, yaprox);
         for (int i = 0; i < aux.length; i++) {
             for (int j = 0; j < aux[0].length; j++) {
-                aux[i][j] = aux[i][j] * aux[i][j];
+                aux[i][j] = Math.pow(aux[i][j], 2);
             }
         }
         return aux;
@@ -125,7 +125,7 @@ public class pruebaT {
             System.out.println("Y aproximadas:");
             for (int i = 0; i < yaprox.length; i++) {
                 for (int j = 0; j < yaprox[0].length; j++) {
-                    System.out.println("y " + i + ": \t" + Operaciones.redondearNum(yaprox[i][j]));
+                    System.out.println("y " + (i + 1) + ": \t" + Operaciones.redondearNum(yaprox[i][j]));
                 }
 
             }
@@ -158,7 +158,8 @@ public class pruebaT {
         for (int i = 0; i < y.length; i++) {
             sum += y[i][0];
         }
-        return sum / y.length;
+        sum = sum / y.length;
+        return sum;
     }
 
     public static double[] significanciaIndividual(double[] varBeta, double varianza, double[][] matC, double ttablas,
@@ -187,6 +188,11 @@ public class pruebaT {
             }
         }
         return t;
+    }
+
+    public static double HallarSEC(double[][] y) {
+
+        return 0;
     }
 
 }
