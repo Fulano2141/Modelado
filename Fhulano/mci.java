@@ -4,8 +4,6 @@ package Fhulano;
 public class mci {
     public static void main(String[] args) {
         double[][] pi;
-        double n;
-
         double[][] y = { { 359.27, 102.96, 578.49, }, { 415.76, 114.38, 650.86, }, { 435.11, 118.23, 684.87, },
                 { 440.17, 120.45, 680.47, }, { 410.66, 116.25, 642.19, }, { 530.33, 140.27, 787.41, },
                 { 557.15, 143.84, 818.06, }, { 472.80, 128.20, 712.16, }, { 471.76, 126.65, 722.23, },
@@ -23,8 +21,6 @@ public class mci {
                 { 45.0, 6.04, 2.81, 26.52, 62.0 }, { 48.0, 6.36, 3.38, 27.45, 51.0 }, { 49.0, 7.04, 3.14, 30.28, 29.0 },
                 { 53.0, 7.81, 3.14, 25.4, 22.0 }, { 57.0, 8.09, 6.19, 28.84, 38.0 },
                 { 66.0, 9.24, 6.69, 34.36, 41.0 } };
-        n = x.length;
-
         double[][] xt = Operaciones.transpuesta(x);
         pi = Operaciones.invert(Operaciones.multiplicacionNxM(xt, x));
         pi = Operaciones.multiplicacionNxM(pi, Operaciones.multiplicacionNxM(xt, y));

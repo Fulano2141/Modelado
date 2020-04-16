@@ -9,10 +9,12 @@ public class autocorrelacion {
     public static void main(String args[]) throws IOException {
         int n, k;
         boolean imprimir = true;
-        double a1p, a2p, a3p, ttablas, varianza;
+        // double a1p, a2p, a3p; 
+        double ttablas, varianza;
         double SRC;
         double STC, SEC;
-        double[] b, varBeta;
+        double[][] b;
+        double[] varBeta;
         double[][] matC, matVar, d, ya, y, x;
         double r = 0.0;
         System.out.println("---------------------------------------------------------- AR simple");
@@ -32,7 +34,7 @@ public class autocorrelacion {
         ttablas = 1.7613;
         // Y aproximadas
 
-        yuleWalker asWalker = new yuleWalker(b[0], b[1], b[2]);
+        yuleWalker asWalker = new yuleWalker(b[0][0], b[1][0], b[2][0]);
         System.out.println(asWalker.toString());
         double[][] gamass = asWalker.gAmas(!imprimir);
         for (int i = 0; i < gamass.length; i++) {
@@ -40,7 +42,7 @@ public class autocorrelacion {
                 System.out.println("G[" + i + "]:" + Operaciones.redondearNum(gamass[i][j]));
             }
         }
-        ya = pruebaT.YAproximadas(b, x, k, !imprimir);
+        ya = pruebaT.YAproximadas(b, x,y[0].length, k, !imprimir);
         d = pruebaT.ObtenerSRCMat(y, ya);
         System.out.println(pruebaT.YPromedio(y));
         SRC = pruebaT.SumatoriaSRCMat(d, !imprimir);
@@ -116,7 +118,7 @@ public class autocorrelacion {
         File file = new File("archivo.xls");
         FileWriter salida = new FileWriter(file);
         for (int i = 0; i < y1.size(); i++) {
-            // System.out.println(y1.get(i));
+            System.out.println(y1.get(i));
             salida.write((i + 1) + "");
             salida.write("\t");
             salida.write(Operaciones.redondearNum(y1.get(i)) + "");
