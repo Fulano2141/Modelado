@@ -58,7 +58,7 @@ public class PruebaDeEstacioneriedad {
         // double ftablas = 2.1098;
         double[][] betas = Betas.HallarBetas(x, y, !true);
         // Y aproximadas
-        double[][] ya = pruebaT.YAproximadas(betas, x, y[0].length, k, true);
+        double[][] ya = pruebaT.YAproximadas(betas, x, y[0].length, k, !true);
         /// ((Y) - (Yaproximadas)) al cuadrado = SRC
         double[][] d = pruebaT.ObtenerSRCMat(y, ya);
 

@@ -31,7 +31,7 @@ public class pruebaT {
         int n = getXinput().length;
         int k = getXinput()[0].length;
         System.out.println("K = " + k + " N = " + n);
-        double[][] yap = YAproximadas(bet, getXinput(), getYinput()[0].length, k, true);
+        double[][] yap = YAproximadas(bet, getXinput(), getYinput()[0].length, k, !true);
         double[][] srcmat = ObtenerSRCMat(getYinput(), yap);
         double src = SumatoriaSRCMat(srcmat, false);
         double var = src / n - k;
@@ -137,7 +137,7 @@ public class pruebaT {
                 break;
             }
         }
-        System.out.println(unos);
+        // System.out.println(unos);
         for (int i = 0; i < yaprox.length; i++) {
             for (int j = 0; j < yaprox[0].length; j++) {
                 double aux = 0.0;

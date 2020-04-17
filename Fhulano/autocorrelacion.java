@@ -9,30 +9,31 @@ public class autocorrelacion {
     public static void main(String args[]) throws IOException {
         int n, k;
         boolean imprimir = true;
-        // double a1p, a2p, a3p; 
-        double ttablas, varianza;
-        double SRC;
-        double STC, SEC;
+        // double a1p, a2p, a3p;
+        // double ttablas, varianza;
+        // double SRC;
+        // double STC, SEC;
         double[][] b;
-        double[] varBeta;
-        double[][] matC, matVar, d, ya, y, x;
-        double r = 0.0;
+        // double[] varBeta;
+        // double[][] matC, matVar, d, ya;
+        double[][] y, x;
+        // double r = 0.0;
         System.out.println("---------------------------------------------------------- AR simple");
-        y = cargarDatos.datosARSimpleYT();
-        x = cargarDatos.datosARSimpleXT();
-        n = x.length;
-        // double ftablas = 2.1098;
-        b = Betas.HallarBetas(x, y, false);
-        SRC = 0.0;
-        STC = 0.0;
-        SEC = 0.0;
-        k = x[0].length;
-
-        // t de tablas con 95% de confianza
-        // ttablas = 2.1448;
-        // t de tablas con 90% de confianza
-        ttablas = 1.7613;
-        // Y aproximadas
+        y = cargarDatos.datosARSimpleYT3();
+        x = cargarDatos.datosARSimpleXT3();
+        // n = x.length;
+        // // double ftablas = 2.1098;
+        b = Betas.HallarBetas(x, y, !true);
+        // SRC = 0.0;
+        // STC = 0.0;
+        // SEC = 0.0;
+        // k = x[0].length;
+        // System.out.println(k);
+        // // t de tablas con 95% de confianza
+        // // ttablas = 2.1448;
+        // // t de tablas con 90% de confianza
+        // ttablas = 1.7613;
+        // // Y aproximadas
 
         yuleWalker asWalker = new yuleWalker(b[0][0], b[1][0], b[2][0]);
         System.out.println(asWalker.toString());
@@ -42,23 +43,25 @@ public class autocorrelacion {
                 System.out.println("G[" + i + "]:" + Operaciones.redondearNum(gamass[i][j]));
             }
         }
-        ya = pruebaT.YAproximadas(b, x,y[0].length, k, !imprimir);
-        d = pruebaT.ObtenerSRCMat(y, ya);
-        System.out.println(pruebaT.YPromedio(y));
-        SRC = pruebaT.SumatoriaSRCMat(d, !imprimir);
-        STC = pruebaT.HallarSTC(y);
-        SEC = STC - SRC;
-        // SEC = pruebaT.HallarSEC(y);
-        pruebaT.srcstcsec(SRC, STC, SEC, true);
-        r = 1 - (SRC / STC);
-        // r = SEC / STC;
-        varianza = SRC / (n - k);
-        matC = pruebaT.ObtenerMatC(x);
-        matVar = pruebaT.ObtenerMatdevarianzas(matC, varianza, !imprimir);
-        varBeta = pruebaT.varianzaDeBetas(matVar, varianza);
-        System.out.println("Coeficiente de Determinacion: R^2 = " + r + "\t R = " + Math.sqrt(r));
-        System.out.println("GL T-Student: " + "(" + n + "-" + b.length + ") = " + (n - k));
-        pruebaT.significanciaIndividual(varBeta, varianza, matC, ttablas, imprimir);
+        // ya = pruebaT.YAproximadas(b, x, y[0].length, k, !imprimir);
+        // d = pruebaT.ObtenerSRCMat(y, ya);
+        // System.out.println(pruebaT.YPromedio(y));
+        // SRC = pruebaT.SumatoriaSRCMat(d, !imprimir);
+        // STC = pruebaT.HallarSTC(y);
+        // SEC = STC - SRC;
+        // // SEC = pruebaT.HallarSEC(y);
+        // pruebaT.srcstcsec(SRC, STC, SEC, true);
+        // r = 1 - (SRC / STC);
+        // // r = SEC / STC;
+        // varianza = SRC / (n - k);
+        // matC = pruebaT.ObtenerMatC(x);
+        // matVar = pruebaT.ObtenerMatdevarianzas(matC, varianza, !imprimir);
+        // varBeta = pruebaT.varianzaDeBetas(matVar, varianza);
+        // System.out.println("Coeficiente de Determinacion: R^2 = " + r + "\t R = " +
+        // Math.sqrt(r));
+        // System.out.println("GL T-Student: " + "(" + n + "-" + b.length + ") = " + (n
+        // - k));
+        // pruebaT.significanciaIndividual(varBeta, varianza, matC, ttablas, imprimir);
 
         // System.out.println("----------------------------------------------------------
         // AR parcial");
@@ -98,8 +101,8 @@ public class autocorrelacion {
         }
 
         ArrayList<Double> y1 = new ArrayList<Double>();
-        double[][] y1w = { { 28.0 }, { 33.0 }, { 40.0 }, { 42.0 }, { 48.0 }, { 52.0 }, { 50.0 }, { 47.0 }, { 58.0 },
-                { 67.0 }, { 77.0 }, { 73.0 }, { 72.0 }, { 80.0 }, { 83.0 }, { 80.0 }, { 90.0 }, };
+
+        double[][] y1w = { { 1085.91 }, { 1246.99 }, { 1401.94 }, };
         for (int i = 0; i < y1w.length; i++) {
             y1.add(y1w[i][0]);
         }
