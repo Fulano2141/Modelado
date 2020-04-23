@@ -37,7 +37,7 @@ public class pruebaT {
         double var = src / n - k;
         // double[][] matvar = ObtenerMatdevarianzas(cp, var, false);
         double[] varbet = varianzaDeBetas(cp, var);
-        double[] pr = significanciaIndividual(varbet, var, cp, ttabla, true);
+        significanciaIndividual(varbet, var, cp, ttabla, true);
     }
 
     @Override
@@ -128,15 +128,15 @@ public class pruebaT {
 
     public static double[][] YAproximadas(double[][] betas, double[][] x, int ysize, int k, boolean imprimir) {
         double[][] yaprox = new double[x.length][ysize];
-        boolean unos = true;
-        for (int i = 0; i < x.length; i++) {
-            if (x[i][0] == 1.0)
-                unos = true;
-            else {
-                unos = false;
-                break;
-            }
-        }
+        // boolean unos = true;
+        // for (int i = 0; i < x.length; i++) {
+        //     if (x[i][0] == 1.0)
+        //         unos = true;
+        //     else {
+        //         unos = false;
+        //         break;
+        //     }
+        // }
         // System.out.println(unos);
         for (int i = 0; i < yaprox.length; i++) {
             for (int j = 0; j < yaprox[0].length; j++) {

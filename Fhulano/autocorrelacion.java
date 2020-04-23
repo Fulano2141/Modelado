@@ -7,7 +7,8 @@ import java.util.ArrayList;
 
 public class autocorrelacion {
     public static void main(String args[]) throws IOException {
-        int n, k;
+        int n;
+        // int k;
         boolean imprimir = true;
         // double a1p, a2p, a3p;
         // double ttablas, varianza;
@@ -115,7 +116,7 @@ public class autocorrelacion {
 
             // System.out.println(ypro[i][0]);
             // } catch (Exception e) {
-            // // TODO: handle exception
+            // // TOD handle exception
             // }
         }
         File file = new File("archivo.xls");

@@ -293,7 +293,7 @@ public class distribuciones {
     }
 
     public static void main(String args[]) {
-        distribuciones dc = new distribuciones();
+        // distribuciones dc = new distribuciones();
     }
 
 }

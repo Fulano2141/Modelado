@@ -15,22 +15,30 @@ public class test1 {
         // double ran = Math.random();
         // int valorEntero = (int) (Math.random() * (N - M + 1) + M);
         Scanner entrada = new Scanner(System.in);
-        int a = -5, b = 10;
-        double meu = entrada.nextDouble();
-        double lamda = 1 / meu;
+        // int a = -5, b = 10;
+        // double meu = entrada.nextDouble();
+        // double lamda = 1 / meu;
+        System.out.println("Alpha");
+        double alp = entrada.nextDouble();
+        System.out.println("Beta");
+        double bet = entrada.nextDouble();
         for (int i = 0; i < t.length; i++) {
             // t[i][0] = (Math.random() * (b - a) + a);
-            t[i][0] = getNext(lamda);
+            t[i][0] = getNextExp(alp, bet);
         }
         for (int i = 0; i < t.length; i++) {
             // t[i][0] = a + t[i][0] * (b - a);
             System.out.println(t[i][0]);
         }
-
+        entrada.close();
     }
 
     public static double getNext(double lamda) {
         return -lamda * Math.log(Math.random());
         // return Math.log(1 - rand.nextDouble()) / (-lambda);
+    }
+
+    public static double getNextExp(double alpha, double beta) {
+        return Math.pow(-Math.log(Math.random()), 1 / alpha);
     }
 }

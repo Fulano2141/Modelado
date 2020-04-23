@@ -136,7 +136,7 @@ public class mc2e {
                 // double[][] matvar = ObtenerMatdevarianzas(cp, var, false);
                 double[] varbet = pruebaT.varianzaDeBetas(cp, var);
 
-                double[] pr = pruebaT.significanciaIndividual(varbet, var, cp, 2.1315, true);
+                pruebaT.significanciaIndividual(varbet, var, cp, 2.1315, true);
         }
 
         public static void pruebasEsta(double[][] x, double[][] y) {
