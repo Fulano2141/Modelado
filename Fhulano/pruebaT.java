@@ -30,11 +30,12 @@ public class pruebaT {
         double[][] bet = Betas.HallarBetas(getXinput(), getYinput(), false);
         int n = getXinput().length;
         int k = getXinput()[0].length;
-        System.out.println("K = " + k + " N = " + n);
+        // System.out.println("K = " + k + " N = " + n);
         double[][] yap = YAproximadas(bet, getXinput(), getYinput()[0].length, k, !true);
         double[][] srcmat = ObtenerSRCMat(getYinput(), yap);
         double src = SumatoriaSRCMat(srcmat, false);
-        double var = src / n - k;
+        double var = src / (n - k);
+        // System.out.println(src);
         // double[][] matvar = ObtenerMatdevarianzas(cp, var, false);
         double[] varbet = varianzaDeBetas(cp, var);
         significanciaIndividual(varbet, var, cp, ttabla, true);
@@ -128,88 +129,62 @@ public class pruebaT {
 
     public static double[][] YAproximadas(double[][] betas, double[][] x, int ysize, int k, boolean imprimir) {
         double[][] yaprox = new double[x.length][ysize];
-        // boolean unos = true;
-        // for (int i = 0; i < x.length; i++) {
-        //     if (x[i][0] == 1.0)
-        //         unos = true;
-        //     else {
-        //         unos = false;
-        //         break;
-        //     }
-        // }
-        // System.out.println(unos);
-        for (int i = 0; i < yaprox.length; i++) {
-            for (int j = 0; j < yaprox[0].length; j++) {
-                double aux = 0.0;
-                for (int l = 0; l < x[0].length; l++) {
-                    aux = aux + betas[j][l] * x[i][l];
-                }
-                yaprox[i][j] = aux;
+        boolean unos = true;
+        for (int i = 0; i < x.length; i++) {
+            if (x[i][0] == 1.0)
+                unos = true;
+            else {
+                unos = false;
+                break;
             }
         }
-
+        if (unos) {
+            k--;
+        }
+        // System.out.println(x.length + "\t" + ysize);
         // for (int i = 0; i < yaprox.length; i++) {
-        // if (k == 1) {
-        // if (unos)
-        // yaprox[i][0] = betas[0][0] + (betas[1][0] * x[i][0]);
-        // else
-        // yaprox[i][0] = betas[0][0] * x[i][0];
+        // for (int j = 0; j < yaprox[0].length; j++) {
+        // double aux = 0.0;
+        // for (int l = 0; l < x[0].length; l++) {
+        // aux = aux + betas[j][l] * x[i][l];
         // }
-        // switch (k) {
-        // case 1:
-        // break;
-        // case 2:
-        // break;
-        // case 3:
-        // break;
-        // case 4:
-        // yaprox[i][0] = (x[i][0] * betas[0][0]) + (x[i][1] * betas[1][0]) + (x[i][2] *
-        // betas[2][0])
-        // + (x[i][3] * betas[3][0]);
-        // break;
-        // case 5:
-        // yaprox[i][0] = (x[i][0] * betas[0][0]) + (x[i][1] * betas[1][0]) + (x[i][2] *
-        // betas[2][0])
-        // + (x[i][3] * betas[3][0]) + (x[i][4] * betas[4][0]);
-        // break;
-        // case 6:
-        // yaprox[i][0] = (x[i][0] * betas[0][0]) + (x[i][1] * betas[1][0]) + (x[i][2] *
-        // betas[2][0])
-        // + (x[i][3] * betas[3][0]);
+        // yaprox[i][j] = aux;
+        // }
+        // }
+        for (int i = 0; i < yaprox.length; i++) {
+            switch (k) {
+                case 1:
+                    yaprox[i][0] = betas[0][0] * x[i][0] + betas[1][0] * x[i][1];
+                    break;
+                case 2:
+                    yaprox[i][0] = betas[0][0] * x[i][0] + betas[1][0] * x[i][1] + betas[2][0] * x[i][2];
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    yaprox[i][0] = (x[i][0] * betas[0][0]) + (x[i][1] * betas[1][0]) + (x[i][2] * betas[2][0])
+                            + (x[i][3] * betas[3][0]);
+                    break;
+                case 5:
+                    yaprox[i][0] = (x[i][0] * betas[0][0]) + (x[i][1] * betas[1][0]) + (x[i][2] * betas[2][0])
+                            + (x[i][3] * betas[3][0]) + (x[i][4] * betas[4][0]);
+                    break;
+                case 6:
+                    yaprox[i][0] = (x[i][0] * betas[0][0]) + (x[i][1] * betas[1][0]) + (x[i][2] * betas[2][0])
+                            + (x[i][3] * betas[3][0]);
 
-        // break;
-        // case 7:
-        // break;
-        // }
-        // if (k == 2) {
-        // if (unos)
-        // yaprox[i][0] = betas[0][0] + (x[i][1] * betas[1][0]) + (x[i][2] *
-        // betas[2][0]);
-        // else
-        // yaprox[i][0] = (x[i][0] * betas[0][0]) + (x[i][1] * betas[1][0]);
-        // }
-
-        // if (k == 3) {
-        // if (unos)
-        // yaprox[i][0] = betas[0][0] + (x[i][1] * betas[1][0]) + (x[i][2] *
-        // betas[2][0])
-        // + (x[i][3] * betas[3][0]);
-        // else
-        // yaprox[i][0] = (x[i][0] * betas[0][0]) + (x[i][1] * betas[1][0]) + (x[i][2] *
-        // betas[2][0]);
-        // }
-        // // yaprox[i][0] = betas[0] + (x[i][1] * betas[1]) + (x[i][2] * betas[2]) +
-        // // (x[i][3]
-        // // * betas[3]);
-        // // yaprox[i][0] = betas[0] + (x[i][1] * betas[1]) + (x[i][2] * betas[2]);
-        // }
+                    break;
+                case 7:
+                    break;
+            }
+        }
         if (imprimir) {
             System.out.println("----------------------------------");
             System.out.println("Y aproximadas:");
             for (int i = 0; i < yaprox.length; i++) {
-                for (int j = 0; j < yaprox[0].length; j++) {
-                    System.out.print("y " + (i + 1) + ": \t" + Operaciones.redondearNum(yaprox[i][j]) + "\t");
-                }
+                // for (int j = 0; j < yaprox[0].length; j++) {
+                System.out.print("y " + (i + 1) + ": \t" + Operaciones.redondearNum(yaprox[i][0]) + "\t");
+                // }
                 System.out.println();
             }
         }
@@ -266,8 +241,7 @@ public class pruebaT {
             else
                 pruebas[i] = "Se rechaza H1";
             if (imprimir) {
-                System.out.println(
-                        pruebas[i] + ":\t" + "t aprox " + t[i] + " ttabla " + ttablas);
+                System.out.println(pruebas[i] + ":\t" + "t aprox " + t[i] + " ttabla " + ttablas);
             }
         }
         return t;

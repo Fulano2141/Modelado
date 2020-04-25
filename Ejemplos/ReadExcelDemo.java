@@ -20,7 +20,7 @@ public class ReadExcelDemo {
         }
     }
 
-    private static double[][] leerExcel(String archivo) {
+    public static double[][] leerExcel(String archivo) {
         double[][] aux;
         try {
             FileInputStream fil = new FileInputStream(new File(archivo));
