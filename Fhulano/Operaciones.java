@@ -11,6 +11,18 @@ public class Operaciones {
         return aux;
     }
 
+    public static double[][] borrarfila(double[][] mat, int pos) {
+        double[][] aux = new double[mat.length - 1][mat[0].length];
+        for (int i = 0; i < aux.length; i++) {
+            if (i != pos) {
+                for (int j = 0; j < aux[0].length; j++) {
+                    aux[i][j] = mat[i][j];
+                }
+            }
+        }
+        return aux;
+    }
+
     public static double[][] sumarAB(double[][] a, double[][] b) {
         double c[][] = new double[a.length][a.length];
         for (int i = 0; i < c.length; ++i) {
@@ -64,7 +76,7 @@ public class Operaciones {
         // 2 0 1
         // 3 0 0
         // 5 1 1
-        double[][] a = { { 2, 0, 1 }, { 3, 0, 0 }, { 5, 1, 1 } };
+        double[][] a = {{2, 0, 1}, {3, 0, 0}, {5, 1, 1}};
         return a;
     }
 
@@ -73,7 +85,7 @@ public class Operaciones {
         // 1 0 1
         // 1 2 1
         // 1 1 0
-        double[][] a = { { 1, 0, 1 }, { 1, 2, 1 }, { 1, 1, 0 } };
+        double[][] a = {{1, 0, 1}, {1, 2, 1}, {1, 1, 0}};
         return a;
     }
 

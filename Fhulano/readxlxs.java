@@ -125,7 +125,7 @@ public class readxlxs {
                             break;
                         case Cell.CELL_TYPE_STRING:
                             aux[i][j] = Double.parseDouble(cell.getStringCellValue());
-                            // System.out.print(cell.getStringCellValue() + "\t");
+                            System.out.print(cell.getStringCellValue() + "\t");
                             break;
                     }
 

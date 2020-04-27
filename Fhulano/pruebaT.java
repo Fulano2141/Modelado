@@ -25,9 +25,9 @@ public class pruebaT {
         this.yinput = yinput;
     }
 
-    public void prueba(double ttabla) {
+    public void prueba(double ttabla, double ftabla, String dat) {
         double[][] cp = ObtenerMatC(getXinput());
-        double[][] bet = Betas.HallarBetas(getXinput(), getYinput(), false);
+        double[][] bet = Betas.HallarBetas(getXinput(), getYinput(), !true);
         int n = getXinput().length;
         int k = getXinput()[0].length;
         // System.out.println("K = " + k + " N = " + n);
@@ -36,9 +36,22 @@ public class pruebaT {
         double src = SumatoriaSRCMat(srcmat, false);
         double var = src / (n - k);
         // System.out.println(src);
-        // double[][] matvar = ObtenerMatdevarianzas(cp, var, false);
+        double[][] matvar = ObtenerMatdevarianzas(cp, var, false);
         double[] varbet = varianzaDeBetas(cp, var);
-        significanciaIndividual(varbet, var, cp, ttabla, true);
+        significanciaIndividual(varbet, var, cp, ttabla, true, dat);
+        if (ftabla > 0.0) {
+            System.out.println("Prueba F fisher");
+            double stc = HallarSTC(getYinput());
+            double sec = stc - src;
+            double acum1 = sec / (k - 1), acum2 = src / (n - k);
+            double F = acum1 / acum2;
+            if (F > ftabla) {
+                System.out.println("Se rechaza H0" + " Ftablas = " + ftabla + "faprox " + F);
+            } else {
+                System.out.println("Se rechaza H1" + " Ftablas = " + ftabla + "faprox " + F);
+            }
+        }
+
     }
 
     @Override
@@ -47,7 +60,7 @@ public class pruebaT {
     }
 
     public static double[][] Definirlimites(double[] varBeta, double ttablas, double varianza, double[][] matC,
-            boolean imprimir) {
+                                            boolean imprimir) {
         double[][] aux = new double[varBeta.length][2];
         if (imprimir) {
             System.out.println("----------------------------------");
@@ -122,13 +135,15 @@ public class pruebaT {
         for (int i = 0; i < aux.length; i++) {
             for (int j = 0; j < aux[0].length; j++) {
                 aux[i][j] = Math.pow(aux[i][j], 2);
+                // System.out.print(aux[i][j]);
             }
+            // System.out.println();
         }
         return aux;
     }
 
     public static double[][] YAproximadas(double[][] betas, double[][] x, int ysize, int k, boolean imprimir) {
-        double[][] yaprox = new double[x.length][ysize];
+        double[][] yest = new double[x.length][ysize];
         boolean unos = true;
         for (int i = 0; i < x.length; i++) {
             if (x[i][0] == 1.0)
@@ -138,9 +153,9 @@ public class pruebaT {
                 break;
             }
         }
-        if (unos) {
-            k--;
-        }
+//        if (unos) {
+//            k--;
+//        }
         // System.out.println(x.length + "\t" + ysize);
         // for (int i = 0; i < yaprox.length; i++) {
         // for (int j = 0; j < yaprox[0].length; j++) {
@@ -151,45 +166,46 @@ public class pruebaT {
         // yaprox[i][j] = aux;
         // }
         // }
-        for (int i = 0; i < yaprox.length; i++) {
+        for (int i = 0; i < yest.length; i++) {
             switch (k) {
                 case 1:
-                    yaprox[i][0] = betas[0][0] * x[i][0] + betas[1][0] * x[i][1];
+//                    if (unos)
+//                        yest[i][0] = betas[0][0] * x[i][0] + betas[1][0] * x[i][1];
+//                    else
+                    yest[i][0] = betas[0][0] * x[i][0];
                     break;
                 case 2:
-                    yaprox[i][0] = betas[0][0] * x[i][0] + betas[1][0] * x[i][1] + betas[2][0] * x[i][2];
+                    yest[i][0] = betas[0][0] * x[i][0] + betas[1][0] * x[i][1];
                     break;
                 case 3:
+                    yest[i][0] = betas[0][0] * x[i][0] + betas[1][0] * x[i][1] + betas[2][0] * x[i][2];
                     break;
                 case 4:
-                    yaprox[i][0] = (x[i][0] * betas[0][0]) + (x[i][1] * betas[1][0]) + (x[i][2] * betas[2][0])
-                            + (x[i][3] * betas[3][0]);
+                    yest[i][0] = betas[0][0] * x[i][0] + betas[1][0] * x[i][1] + betas[2][0] * x[i][2] + betas[3][0] * x[i][3];
                     break;
                 case 5:
-                    yaprox[i][0] = (x[i][0] * betas[0][0]) + (x[i][1] * betas[1][0]) + (x[i][2] * betas[2][0])
-                            + (x[i][3] * betas[3][0]) + (x[i][4] * betas[4][0]);
+                    yest[i][0] = betas[0][0] * x[i][0] + betas[1][0] * x[i][1] + betas[2][0] * x[i][2] + betas[3][0] * x[i][3] + betas[4][0] * x[i][4];
                     break;
                 case 6:
-                    yaprox[i][0] = (x[i][0] * betas[0][0]) + (x[i][1] * betas[1][0]) + (x[i][2] * betas[2][0])
-                            + (x[i][3] * betas[3][0]);
-
+                    yest[i][0] = betas[0][0] * x[i][0] + betas[1][0] * x[i][1] + betas[2][0] * x[i][2] + betas[3][0] * x[i][3] + betas[4][0] * x[i][4] + betas[5][0] * x[i][5];
                     break;
                 case 7:
+                    yest[i][0] = betas[0][0] * x[i][0] + betas[1][0] * x[i][1] + betas[2][0] * x[i][2] + betas[3][0] * x[i][3] + betas[4][0] * x[i][4] + betas[5][0] * x[i][5] + betas[6][0] * x[i][6];
                     break;
             }
         }
         if (imprimir) {
             System.out.println("----------------------------------");
             System.out.println("Y aproximadas:");
-            for (int i = 0; i < yaprox.length; i++) {
+            for (int i = 0; i < yest.length; i++) {
                 // for (int j = 0; j < yaprox[0].length; j++) {
-                System.out.print("y " + (i + 1) + ": \t" + Operaciones.redondearNum(yaprox[i][0]) + "\t");
+                System.out.print("y " + (i + 1) + ": \t" + Operaciones.redondearNum(yest[i][0]) + "\t");
                 // }
                 System.out.println();
             }
         }
 
-        return yaprox;
+        return yest;
 
     }
 
@@ -221,10 +237,10 @@ public class pruebaT {
     }
 
     public static double[] significanciaIndividual(double[] varBeta, double varianza, double[][] matC, double ttablas,
-            boolean imprimir) {
+                                                   boolean imprimir, String dat) {
         if (imprimir) {
             System.out.println("----------------------------------");
-            System.out.println("Prueba de significancia individual");
+            System.out.println(dat);
         }
         double[] t = new double[varBeta.length];
         for (int i = 0; i < t.length; i++) {
@@ -247,9 +263,5 @@ public class pruebaT {
         return t;
     }
 
-    public static double HallarSEC(double[][] y) {
-
-        return 0;
-    }
 
 }

@@ -29,4 +29,14 @@ public class datos {
         return data;
     }
 
+    public static double[][] EstimadasYn(String s) {
+        double[][] data = readxlxs.leerExcels("datas.xlsx", ("y" + s));
+        return data;
+    }
+
+    public static double[][] Exogenas(String string) {
+        double[][] data = readxlxs.leerExcels("data.xlsx", (string));
+        return data;
+
+    }
 }
