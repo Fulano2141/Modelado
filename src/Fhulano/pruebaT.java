@@ -1,5 +1,7 @@
 package Fhulano;
 
+import java.util.Arrays;
+
 public class pruebaT {
     double[][] xinput;
     double[][] yinput;
@@ -27,11 +29,11 @@ public class pruebaT {
 
     public void prueba(double ttabla, double ftabla, String dat) {
         double[][] cp = ObtenerMatC(getXinput());
-        double[][] bet = Betas.HallarBetas(getXinput(), getYinput(), !true);
+        double[][] bet = Betas.HallarBetas(getXinput(), getYinput(), false);
         int n = getXinput().length;
         int k = getXinput()[0].length;
         // System.out.println("K = " + k + " N = " + n);
-        double[][] yap = YAproximadas(bet, getXinput(), getYinput()[0].length, k, !true);
+        double[][] yap = YAproximadas(bet, getXinput(), getYinput()[0].length, k, false);
         double[][] srcmat = ObtenerSRCMat(getYinput(), yap);
         double src = SumatoriaSRCMat(srcmat, false);
         double var = src / (n - k);
@@ -56,7 +58,7 @@ public class pruebaT {
 
     @Override
     public String toString() {
-        return "{" + " xinput='" + getXinput() + "'" + ", yinput='" + getYinput() + "'" + "}";
+        return "{" + " xinput='" + Arrays.deepToString(getXinput()) + "'" + ", yinput='" + Arrays.deepToString(getYinput()) + "'" + "}";
     }
 
     public static double[][] Definirlimites(double[] varBeta, double ttablas, double varianza, double[][] matC,

@@ -63,14 +63,14 @@ public class PruebaDeEstacioneriedad {
         double[][] matC;
         int n = getX().length;
         int k = getX()[0].length;
-        double[][] betas = Betas.HallarBetas(x, y, !true);
+        double[][] betas = Betas.HallarBetas(x, y, true);
         setBetasCal(betas);
         // double ftablas = 2.1098;
         // Y aproximadas
 //        double[][] ya = pruebaT.YAproximadas(betas, x, y[0].length, k, !true);
         /// ((Y) - (Yaproximadas)) al cuadrado = SRC
 //        double[][] d = pruebaT.ObtenerSRCMat(y, ya);
-        readtest(pruebaD);
+//        readtest(pruebaD);
 //        SRC = pruebaT.SumatoriaSRCMat(d, false);
 //        STC = pruebaT.HallarSTC(y);
 //        SEC = STC - SRC;

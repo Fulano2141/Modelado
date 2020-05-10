@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 public class test1 {
 
-    double e = 2.7182818284590452353602874713527;
-
     // 100 num ale -5 y 10
     //
     public static void main(String[] args) {
@@ -34,7 +32,7 @@ public class test1 {
     }
 
     public static double getNext(double lamda) {
-        return -lamda * Math.log(Math.random());
+        return -lamda * Math.log(1 - Math.random());
         // return Math.log(1 - rand.nextDouble()) / (-lambda);
     }
 

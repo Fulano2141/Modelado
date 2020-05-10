@@ -2,20 +2,81 @@ package Fhulano;
 
 // import java.util.Random;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class test {
 
     public static void main(String[] args) {
-        // Random randomno = new Random();
-        // System.out.println("Next Gaussian value: " + randomno.nextGaussian());
-//        PruebaDeEstacioneriedad pru = new PruebaDeEstacioneriedad(x, 1.984);
+
+//         Random randomno = new Random();
+//         System.out.println("Next Gaussian value: " + randomno.nextGaussian());
+
+//        PruebaDeEstacioneriedad pru = new PruebaDeEstacioneriedad(null, 0.0);
 //        estacionariedad(pru);
+
 //        pruebaT pt = new pruebaT(datos.datosXn("1"), datos.datosYn("1"));
 //        pruebatstudent(pt);
 
-//        prediccion();
+//        try {
+//            prediccion();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-        ars();
+        prediccion2();
+//        ars();
 
+    }
+
+    private static void prediccion2() {
+        double[][] x = datos.datosX();
+        double[][] y = datos.datosY();
+        double[][] xt = Operaciones.transpuesta(x);
+        double[][] pi = Operaciones.invert(Operaciones.multiplicacionNxM(xt, x));
+        pi = Operaciones.multiplicacionNxM(pi, Operaciones.multiplicacionNxM(xt, y));
+        double[][] yestimados = Operaciones.multiplicacionNxM(x, pi);
+        double[][] errores = Operaciones.restarA_B(y, yestimados);
+        double[][] mevar = medvar(errores);
+//        imp(yestimados);
+//        System.out.println("------------------------------------");
+//        Desviacion_Estandar * Numero_Aleatorio + Media;
+        for (int i = 0; i < yestimados.length; i++) {
+            yestimados[i][0] = yestimados[i][0] + mevar[0][1] * Math.random() + mevar[0][0];
+        }
+        for (int i = 0; i < yestimados.length; i++) {
+            yestimados[i][1] = yestimados[i][1] + mevar[1][1] * Math.random() + mevar[1][0];
+        }
+//        imp(yestimados);
+        writexlxs.escribir(yestimados,"yestimadasmaserror");
+    }
+
+    private static double[][] medvar(double[][] errores) {
+        double aux = 0.0;
+        double[][] ret = new double[2][2];
+        for (int i = 0; i < errores.length; i++) {
+            aux += errores[i][0];
+        }
+        ret[0][0] = aux;
+        aux = 0.0;
+        for (int i = 0; i < errores.length; i++) {
+            aux += Math.pow(errores[i][0] - ret[0][0], 2);
+        }
+        ret[0][1] = aux;
+
+        aux = 0.0;
+        for (int i = 0; i < errores.length; i++) {
+            aux += errores[i][1];
+        }
+        ret[1][0] = aux;
+        aux = 0.0;
+        for (int i = 0; i < errores.length; i++) {
+            aux += Math.pow(errores[i][1] - ret[1][0], 2);
+        }
+        ret[1][1] = aux;
+        return ret;
     }
 
     private static void ars() {
@@ -28,16 +89,65 @@ public class test {
     }
 
 
-    private static void prediccion() {
-        double[][] x = datos.datosX();
-        double[][] y = datos.datosY();
-        double[][] pi;
-        double[][] xt = Operaciones.transpuesta(x);
-        pi = Operaciones.invert(Operaciones.multiplicacionNxM(xt, x));
-        pi = Operaciones.multiplicacionNxM(pi, Operaciones.multiplicacionNxM(xt, y));
-        double[][] yestimados = Operaciones.multiplicacionNxM(x, pi);
-        imp(yestimados);
-        writexlxs.escribir(yestimados);
+    private static void prediccion() throws IOException {
+        double[][] x = datos.Exogenas("AR3y21");
+        double[][] y = datos.Exogenas("AR3y22");
+
+        double[][] b = Betas.HallarBetas(x, y, !true);
+        yuleWalker asWalker = new yuleWalker(b[0][0], b[0][1], b[0][2]);
+//        System.out.println(asWalker.toString());
+        double[][] gamass = asWalker.gAmas(!true);
+        for (int i = 0; i < gamass.length; i++) {
+            for (int j = 0; j < gamass[0].length; j++) {
+                System.out.println("G[" + i + "]:" + Operaciones.redondearNum(gamass[i][j]));
+            }
+        }
+
+        double[][] ypro = new double[50][1];
+        int n = y.length;
+        ypro[0][0] = gamass[0][0] * y[n - 1][0] + gamass[1][0] * y[n - 2][0] + gamass[2][0] * y[n - 3][0];
+        ypro[1][0] = gamass[0][0] * ypro[0][0] + gamass[1][0] * y[n - 1][0] + gamass[2][0] * y[n - 2][0];
+        ypro[2][0] = gamass[0][0] * ypro[1][0] + gamass[1][0] * ypro[0][0] + gamass[2][0] * y[n - 1][0];
+        ypro[3][0] = gamass[0][0] * ypro[2][0] + gamass[1][0] * ypro[1][0] + gamass[2][0] * ypro[1][0];
+        for (int i = 4; i < ypro.length; i++) {
+            ypro[i][0] = gamass[0][0] * ypro[i - 1][0] + gamass[1][0] * ypro[i - 2][0] + gamass[2][0] * ypro[i - 3][0];
+        }
+
+        ArrayList<Double> y1 = new ArrayList<Double>();
+        double[][] y1w = {{3.38}, {2.96}, {2.43},};
+        for (int i = 0; i < y1w.length; i++) {
+            y1.add(y1w[i][0]);
+        }
+
+        // ypro[0][0] = y[y.length-1][0] +y[];
+        for (int i = 0; i < ypro.length; i++) {
+            // try {
+            y1.add(ypro[i][0] + y1.get(y1.size() - 1));
+            // System.out.println(y1.get(i));
+
+            // System.out.println(ypro[i][0]);
+            // } catch (Exception e) {
+            // // TOD handle exception
+            // }
+        }
+
+        File file = new File("archivo.xls");
+        FileWriter salida = new FileWriter(file);
+        for (int i = 0; i < y1.size(); i++) {
+            System.out.println(y1.get(i));
+            salida.write((i + 1) + "");
+            salida.write("\t");
+            salida.write(Operaciones.redondearNum(y1.get(i)) + "");
+            try {
+                salida.write("\t");
+                salida.write(Operaciones.redondearNum(ypro[i][0]) + "");
+            } catch (Exception e) {
+
+            }
+            salida.write("\n");
+        }
+
+        salida.close();
     }
 
     public static void imp(double[][] m1) {

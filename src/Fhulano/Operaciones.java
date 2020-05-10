@@ -150,6 +150,36 @@ public class Operaciones {
 
     }
 
+    public static int[][] transpuesta(int[][] m) {
+        int[][] matrix = new int[m[0].length][m.length];
+        for (int j = 0; j < m[0].length; j++) {
+            for (int i = 0; i < m.length; i++) {
+                matrix[j][i] = m[i][j];
+            }
+        }
+
+        return matrix;
+
+    }
+
+    public static void imprimir(double[][] m) {
+        for (int j = 0; j < m.length; j++) {
+            for (int i = 0; i < m[0].length; i++) {
+                System.out.print(redondearNum(m[j][i]) + "\t");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void imprimir(int[][] m) {
+        for (int j = 0; j < m.length; j++) {
+            for (int i = 0; i < m[0].length; i++) {
+                System.out.print(m[j][i] + "\t");
+            }
+            System.out.println();
+        }
+    }
+
     public static double[][] invert(double a[][]) {
         int n = a.length;
         double x[][] = new double[n][n];
@@ -188,9 +218,9 @@ public class Operaciones {
 
     // Method to carry out the partial-pivoting Gaussian
     // elimination. Here index[] stores pivoting order.
-    public static void gaussian(double a[][], int index[]) {
+    public static void gaussian(double[][] a, int[] index) {
         int n = index.length;
-        double c[] = new double[n];
+        double[] c = new double[n];
         // Initialize the index
         for (int i = 0; i < n; ++i)
             index[i] = i;
@@ -236,13 +266,24 @@ public class Operaciones {
 
     public static double[][] redondearMat(double[][] d) {
         DecimalFormat df = new DecimalFormat("#.0000");
-        double aux[][] = d;
         for (int i = 0; i < d.length; ++i) {
             for (int j = 0; j < d[0].length; ++j) {
-                aux[i][j] = Double.parseDouble(df.format((d[i][j])));
+                d[i][j] = Double.parseDouble(df.format((d[i][j])));
             }
         }
-        return aux;
+        return d;
+    }
+
+    public static void imprimir(double[][] m, boolean b) {
+        for (int j = 0; j < m.length; j++) {
+            for (int i = 0; i < m[0].length; i++) {
+                if (b)
+                    System.out.print(Math.round(m[j][i]) + "\t");
+
+            }
+            System.out.println();
+        }
+
     }
     // DecimalFormat df = new DecimalFormat("#.00");
     // aux[i][j] = Double.parseDouble(df.format((d[i][j])));

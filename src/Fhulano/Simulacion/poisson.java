@@ -1,20 +1,22 @@
 package Fhulano.Simulacion;
 
-import java.util.Scanner;
+public class poisson {
+    double mean;
+    static int n = 10;
 
-public class binomial {
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-//        n= 10 p 0.4
-//        int i = 10; // = n
-//        for (; i > 0; i--) {
-        System.out.println("asd " + binomial(10, 0.4));
-//        }
-        in.close();
+    public poisson(double mean) {
+        this.mean = mean;
     }
 
-    public static double binomial(int n, double p) {
-        double q = 1 - p;
+    public double getMean() {
+        return mean;
+    }
+
+    public void setMean(double mean) {
+        this.mean = mean;
+    }
+
+    public double matProb() {
         double sem = Math.random(), ret = 0.0, inte;
 //        int i = 0, val = 0;
 //        while (inte < sem && n > ret) {
@@ -26,15 +28,22 @@ public class binomial {
 
         for (int j = 0; j <= n; j++) {
 //            double b = Math.pow(p, j) * Math.pow(q, n - j);
-            inte = combina(n, j) * Math.pow(p, j) * Math.pow(q, n - j);
-            System.out.println(inte);
+            inte = Math.pow(Math.E, -getMean()) * Math.pow(mean, j) / factorial(j);
+            System.out.println(inte + " i = " + j);
 
         }
 
         return inte;
+
     }
 
-    public static int combina(int n, int r) {
+    public static void main(String[] args) {
+        poisson po = new poisson(21);
+        po.matProb();
+    }
+
+
+    private static int combina(int n, int r) {
         int c;
         c = factorial(n) / (factorial(r) * factorial(n - r));
         return c;
@@ -45,4 +54,5 @@ public class binomial {
             return 1;
         return number * factorial(number - 1);
     }
+
 }

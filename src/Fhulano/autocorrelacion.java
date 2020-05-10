@@ -24,7 +24,7 @@ public class autocorrelacion {
         x = cargarDatos.datosARSimpleXT3();
         // n = x.length;
         // // double ftablas = 2.1098;
-        b = Betas.HallarBetas(x, y, !true);
+        b = Betas.HallarBetas(x, y, false);
         // SRC = 0.0;
         // STC = 0.0;
         // SEC = 0.0;

@@ -35,8 +35,12 @@ public class datos {
     }
 
     public static double[][] Exogenas(String string) {
-        double[][] data = readxlxs.leerExcels("data.xlsx", (string));
-        return data;
+        return readxlxs.leerExcels("data.xlsx", (string));
 
     }
+
+//    public static double[][] datos(String ar3y12) {
+//        return readxlxs.leerExcels("data.xlsx", (string));
+//
+//    }
 }
