@@ -80,9 +80,8 @@ public class ReedYFrost {
 //                con = 0;
 //                System.out.println();
 //            } else {
-                aux[i][2] = aux[i - 1][1] * (1 - Math.pow(getQ(), aux[i - 1][2]));
+            aux[i][2] = aux[i - 1][1] * (1 - Math.pow(getQ(), aux[i - 1][2]));
 //            }
-
 //                    + Math.log(1.0 / (getQ()));
             aux[i][3] = aux[i][2] + aux[i - 1][3];
             aux[i][1] = getS() - aux[i][3];

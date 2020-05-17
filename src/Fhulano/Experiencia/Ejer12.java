@@ -80,9 +80,11 @@ public class Ejer12 {
         String camino = aini.nombre + ", ";
         String neutro = "Aleatorio";
         nodo aux = aini;
+        double sum = 0.0;
         do {
             neutro = aux.nombre;
 //            System.out.println(neutro);
+            sum += aux.valor;
             if (aux.camB != null) {
                 if (aux.camA.valor < aux.camB.valor) {
                     aux = aux.camA;
@@ -98,6 +100,7 @@ public class Ejer12 {
 
         } while (!neutro.equals("Final") && aux.camA != null && aux.camB != null);
 
+        assert aux.camA != null;
         System.out.println(camino + aux.camA.nombre);
     }
 

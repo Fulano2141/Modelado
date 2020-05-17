@@ -16,6 +16,7 @@ public class bernoulli {
     }
 
     public void updateNumbers() {
+        int[] aux = new int[n];
         double[][] matrix = tProb;
         for (int j = 0; j < getN(); j++) {
             int positionSeleccionable = 0;
@@ -28,8 +29,9 @@ public class bernoulli {
                 }
             }
             //lista.add(positionSeleccionable);
-            numbers[j] = positionSeleccionable;
+            aux[j] = positionSeleccionable;
         }
+        setNumbers(aux);
     }
 
 

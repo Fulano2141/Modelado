@@ -15,16 +15,14 @@ public class Operaciones {
         double[][] aux = new double[mat.length - 1][mat[0].length];
         for (int i = 0; i < aux.length; i++) {
             if (i != pos) {
-                for (int j = 0; j < aux[0].length; j++) {
-                    aux[i][j] = mat[i][j];
-                }
+                System.arraycopy(mat[i], 0, aux[i], 0, aux[0].length);
             }
         }
         return aux;
     }
 
     public static double[][] sumarAB(double[][] a, double[][] b) {
-        double c[][] = new double[a.length][a.length];
+        double[][] c = new double[a.length][a.length];
         for (int i = 0; i < c.length; ++i) {
             for (int j = 0; j < c.length; ++j) {
                 c[i][j] = a[i][j] + b[i][j];
@@ -34,7 +32,7 @@ public class Operaciones {
     }
 
     public static double[][] restarA_B(double[][] a, double[][] b) {
-        double c[][] = new double[a.length][a[0].length];
+        double[][] c = new double[a.length][a[0].length];
         for (int i = 0; i < c.length; ++i) {
             for (int j = 0; j < c[0].length; ++j) {
                 c[i][j] = a[i][j] - b[i][j];
@@ -44,7 +42,7 @@ public class Operaciones {
     }
 
     public static double[][] multiplicarNxN(double[][] a, double[][] b) {
-        double c[][] = new double[a.length][a.length];
+        double[][] c = new double[a.length][a.length];
         for (int i = 0; i < a[0].length; ++i) {
             for (int j = 0; j < b[0].length; ++j) {
                 double aux = 0.0;
@@ -76,8 +74,7 @@ public class Operaciones {
         // 2 0 1
         // 3 0 0
         // 5 1 1
-        double[][] a = {{2, 0, 1}, {3, 0, 0}, {5, 1, 1}};
-        return a;
+        return new double[][]{{2, 0, 1}, {3, 0, 0}, {5, 1, 1}};
     }
 
     public static double[][] cargadoB3x3() {
@@ -85,12 +82,11 @@ public class Operaciones {
         // 1 0 1
         // 1 2 1
         // 1 1 0
-        double[][] a = {{1, 0, 1}, {1, 2, 1}, {1, 1, 0}};
-        return a;
+        return new double[][]{{1, 0, 1}, {1, 2, 1}, {1, 1, 0}};
     }
 
     public static double[][] identidad(int n) {
-        double ide[][] = new double[n][n];
+        double[][] ide = new double[n][n];
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {
                 if (i == j)
@@ -103,7 +99,7 @@ public class Operaciones {
         return ide;
     }
 
-    public static double trazaA(double mat[][]) {
+    public static double trazaA(double[][] mat) {
         double traza = 0.0;
         for (int i = 0; i < mat.length; ++i) {
             for (int j = 0; j < mat.length; ++j) {
@@ -113,6 +109,7 @@ public class Operaciones {
         }
         return traza;
     }
+
 
     public static double[][] fadeva(double[][] d) {
         return null;
@@ -163,18 +160,30 @@ public class Operaciones {
     }
 
     public static void imprimir(double[][] m) {
-        for (int j = 0; j < m.length; j++) {
+        for (double[] doubles : m) {
             for (int i = 0; i < m[0].length; i++) {
-                System.out.print(redondearNum(m[j][i]) + "\t");
+                System.out.print(redondearNum(doubles[i]) + "\t");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void imprimir(double[][] m, boolean format) {
+        for (double[] doubles : m) {
+            for (int i = 0; i < m[0].length; i++) {
+                if (format)
+                    System.out.print(redondearNum(doubles[i]) + "\t");
+                else
+                    System.out.print((doubles[i]) + "\t");
             }
             System.out.println();
         }
     }
 
     public static void imprimir(int[][] m) {
-        for (int j = 0; j < m.length; j++) {
+        for (int[] ints : m) {
             for (int i = 0; i < m[0].length; i++) {
-                System.out.print(m[j][i] + "\t");
+                System.out.print(ints[i] + "\t");
             }
             System.out.println();
         }
@@ -274,17 +283,38 @@ public class Operaciones {
         return d;
     }
 
-    public static void imprimir(double[][] m, boolean b) {
-        for (int j = 0; j < m.length; j++) {
-            for (int i = 0; i < m[0].length; i++) {
-                if (b)
-                    System.out.print(Math.round(m[j][i]) + "\t");
-
+    public static double maximoNumero(double[][] data) {
+        double max = 0.0;
+        for (double[] datum : data) {
+            for (int j = 0; j < data[0].length; j++) {
+                if (datum[j] > max)
+                    max = datum[j];
             }
-            System.out.println();
         }
-
+        return max;
     }
+
+    public static double minimoNumero(double[][] data) {
+        double min = maximoNumero(data);
+        for (double[] datum : data) {
+            for (int j = 0; j < data[0].length; j++) {
+                if (datum[j] < min)
+                    min = datum[j];
+            }
+        }
+        return min;
+    }
+
+//    public static void imprimir(double[][] m, boolean b) {
+//        for (int j = 0; j < m.length; j++) {
+//            for (int i = 0; i < m[0].length; i++) {
+//                if (b)
+//                    System.out.print(Math.round(m[j][i]) + "\t");
+//
+//            }
+//            System.out.println();
+//        }
+//    }
     // DecimalFormat df = new DecimalFormat("#.00");
     // aux[i][j] = Double.parseDouble(df.format((d[i][j])));
 

@@ -121,9 +121,11 @@ public class Ejer13 {
         StringBuilder camino = new StringBuilder(aini.nombre + ", ");
         String neutro = "";
         nodo aux = aini;
+        double sum = 0.0;
         do {
 
 //            System.out.println(neutro);
+            sum += aux.valor;
             if (aux.camB != null) {
                 if (aux.camA.valor < aux.camB.valor) {
                     aux = aux.camA;
@@ -140,7 +142,7 @@ public class Ejer13 {
             }
         } while (!neutro.equals("Final"));
 //        aux = aux.camA;
-        System.out.println(camino);
+        System.out.println(camino + " [" + sum + "]");
     }
 
     private static double varData(double[] a) {
