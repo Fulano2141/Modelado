@@ -162,7 +162,7 @@ public class Operaciones {
     public static void imprimir(double[][] m) {
         for (double[] doubles : m) {
             for (int i = 0; i < m[0].length; i++) {
-                System.out.print(redondearNum(doubles[i]) + "\t");
+                System.out.print(redondearNum(doubles[i]) + "\t\t");
             }
             System.out.println();
         }
