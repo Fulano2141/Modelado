@@ -4,13 +4,12 @@ import Fhulano.Operaciones;
 import Fhulano.readxlxs;
 
 import java.text.DecimalFormat;
-import java.util.Random;
 
 public class kolmogov {
 
     public static void main(String[] args) {
         DecimalFormat dec = new DecimalFormat("#.0000");
-        double[][] data = readxlxs.leerExcel("aulaK.xlsx");
+        double[][] data = readxlxs.leerExcel("step4.xlsx");
         int n = data.length;
         double media = getMedia(data);
         double varianza = getVarianza(data, media);
@@ -21,7 +20,7 @@ public class kolmogov {
         double menor = 1.0;
         double mayor = 4.4153;
 
-        System.out.println("n: " + n + "\nMu: " + media + "\nVar: " + varianza + "\nNumeroInter: " + intervalos + "\nMax: " + maxNum + "\nMin: " + minNum + "\nInter: " + val + "\n");
+        System.out.println("n: " + n + "\nMu: " + media + "\nVar: " + varianza + "\nNumeroInter: " + intervalos + "\nMax: " + maxNum + "\nMin: " + minNum + "\nInter: " + val );
 //        double[][] frecuencias = new double[(int) Math.round(val)][6];
         double[][] frecuencias = new double[intervalos][6];
         double con = minNum;
@@ -63,16 +62,16 @@ public class kolmogov {
             double rangoB = frecuencias[i][0];
             double c = minNum;
 
-//            while (c < rangoB) {
-//                double elev = Math.pow((((c) - media) / sigma), 2);
-//                valorvar = Math.pow(euler, -elev);
-//                valorvar = valorvar * deltaX;
-//                valorvar = valorvar / Math.sqrt(2 * pi * varianza);
-//                acumulado += valorvar;
-////                System.out.println(c);
-////                c = c + 0.00005;
-//                c++;
-//            }
+            while (c < rangoB) {
+                double elev = Math.pow((((c) - media) / sigma), 2);
+                valorvar = Math.pow(euler, -elev);
+                valorvar = valorvar * deltaX;
+                valorvar = valorvar / Math.sqrt(2 * pi * varianza);
+                acumulado += valorvar;
+//                System.out.println(c);
+//                c = c + 0.00005;
+                c++;
+            }
 
 
 //            System.out.println("________");
@@ -89,26 +88,26 @@ public class kolmogov {
 
         }
         Operaciones.imprimir(frecuencias, false);
-        System.out.println("----");
-        System.out.println("Min: " + dec.format(menor) + "\tMax: " + dec.format(mayor));
+      //  System.out.println("----");
+      //  System.out.println("Min: " + dec.format(menor) + "\tMax: " + dec.format(mayor));
 //        Operaciones.imprimir(frecuencias, true);
         // 1 - x = 0.95
         double Dtabla = 1.64;
 
-        System.out.println("H0: Son iguales\tH1: Son diferentes\nR =>");
+        System.out.print("\nH0: Son iguales\tH1: Son diferentes\nR =>");
         if (mayor > Dtabla) {
-            System.out.println("Se rechaza H0 y se acepta H1");
+            System.out.print(" Se rechaza H0 y se acepta H1");
         } else {
-            System.out.println("Se rechaza H1 y se acepta H0");
+            System.out.print(" Se rechaza H1 y se acepta H0");
         }
     }
 
     private static double rho(double alpha) {
         double sum = 0.0;
         double valor = 0.0;
-        do {
-
-        } while (sum < valor);
+//        do {
+//
+//        } while (sum < valor);
         return factorial(alpha - 1.0);
     }
 

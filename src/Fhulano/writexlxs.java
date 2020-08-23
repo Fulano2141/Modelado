@@ -13,7 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class writexlxs {
     public static void main(String[] args) {
-        escribir(null);
+        escribir(new double[][]{{2, 3}, {2, 3}});
     }
 
     public static void escribir(double[][] aux) {
@@ -30,12 +30,14 @@ public class writexlxs {
 //        data.put("3", new Object[] {2, "Lokesh", "Gupta"});
 //        data.put("4", new Object[] {3, "John", "Adwards"});
 //        data.put("5", new Object[] {4, "Brian", "Schultz"});
-        for (int i = 0; i < aux.length; i++) {
+        for (int i = 0; i < 10; i++ // i = i + 1;
+         ) {
 //            for (int j = 0; j < aux[0].length; j++) {
             int pos = i + 2;
             data.put(pos + "", new Object[]{aux[i][0] + "", aux[i][1] + ""});
 //            }
         }
+
 //        System.out.println(data.containsKey("120"));
         //Iterate over data and write to sheet
         Set<String> keyset = data.keySet();
@@ -54,7 +56,7 @@ public class writexlxs {
         }
         try {
             //Write the workbook in file system
-            FileOutputStream out = new FileOutputStream(new File("datas.xlsx"));
+            FileOutputStream out = new FileOutputStream(new File("sample.xlsx"));
             workbook.write(out);
             out.close();
 
